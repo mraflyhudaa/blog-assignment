@@ -7,7 +7,7 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 To get started with this app, clone this repository to your local machine:
 
 ```bash
-git clone https://github.com/your-username/nextjs-blog-app.git
+git clone https://github.com/mraflyhudaa/blog-assignment.git
 ```
 
 Then, install the dependencies using the following command:
