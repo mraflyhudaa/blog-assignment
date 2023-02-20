@@ -22,15 +22,6 @@ export default function Posts() {
     keepPreviousData: true,
   });
 
-  const getPosts = (page) => {
-    return instance
-      .get(`/posts?page=${page}&per_page=10`)
-      .then((res) => res)
-      .catch((error) => error);
-  };
-
-  console.log(getPosts(1));
-
   if (isLoading || isFetching) {
     return (
       <div className='flex items-center justify-center w-full h-screen'>
