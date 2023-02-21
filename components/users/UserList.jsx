@@ -82,7 +82,7 @@ export default function UserList({ data, page, setPage, isPreviousData }) {
         <ul className='inline-flex items-center -space-x-px'>
           <li>
             <button
-              className='block px-3 py-2 ml-0 text-sm leading-tight text-gray-500 bg-white border border-gray-300 rounded-l-lg hover:bg-gray-100 hover:text-gray-700'
+              className='block px-3 py-2 ml-0 text-sm leading-tight text-gray-500 bg-white border border-gray-300 rounded-l-lg hover:bg-gray-100 hover:text-gray-700 disabled:bg-slate-400 disabled:cursor-not-allowed disabled:hover:text-gray-500 '
               onClick={() => setPage((old) => Math.max(old - 1, 0))}
               disabled={page === 1}
             >
@@ -91,7 +91,7 @@ export default function UserList({ data, page, setPage, isPreviousData }) {
           </li>
           <li>
             <button
-              className='block px-3 py-2 text-sm leading-tight text-gray-500 bg-white border border-gray-300 rounded-r-lg hover:bg-gray-100 hover:text-gray-700'
+              className='block px-3 py-2 text-sm leading-tight text-gray-500 bg-white border border-gray-300 rounded-r-lg hover:bg-gray-100 hover:text-gray-700 disabled:bg-slate-400 disabled:cursor-not-allowed disabled:hover:text-gray-500 '
               onClick={() => {
                 if (!isPreviousData) {
                   setPage((old) => old + 1);
