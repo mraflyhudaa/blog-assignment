@@ -41,18 +41,7 @@ export default function Posts() {
   if (isSuccess) {
     return (
       <div className='flex flex-col'>
-        <div className='grid grid-cols-1 gap-12 mx-auto mt-16 lg:grid-cols-2'>
-          {posts?.map((post) => (
-            <div key={post.id} className='flex w-full'>
-              <PostLists
-                id={post.id}
-                title={post.title}
-                userId={post.user_id}
-                body={post.body}
-              />
-            </div>
-          ))}
-        </div>
+        <PostLists data={posts} />
         <div className='flex flex-col items-center justify-center gap-2 mt-6'>
           <span>Current Page: {page}</span>
           <div className='flex gap-4'>
