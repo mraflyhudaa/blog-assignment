@@ -1,6 +1,5 @@
-import instance from '@/api/axiosConfig';
 import { getAllPosts } from '@/api/posts';
-import PostLists from '@/components/PostLists';
+import PostList from '@/components/posts/PostList';
 import Spinner from '@/components/Spinner';
 import { useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
@@ -41,7 +40,7 @@ export default function Posts() {
   if (isSuccess) {
     return (
       <div className='flex flex-col'>
-        <PostLists data={posts} />
+        <PostList data={posts} />
         <div className='flex flex-col items-center justify-center gap-2 mt-6'>
           <span>Current Page: {page}</span>
           <div className='flex gap-4'>

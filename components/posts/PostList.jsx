@@ -1,6 +1,6 @@
 import Link from 'next/link';
 
-export default function PostLists({ data }) {
+export default function PostList({ data }) {
   return (
     <div className='grid grid-cols-1 gap-12 mx-auto mt-16 lg:grid-cols-2'>
       {data?.map((post) => (
