@@ -61,7 +61,7 @@ export default function Users() {
     <div className='z-0 flex flex-col justify-center gap-4 mt-14'>
       <h1 className='text-3xl font-semibold text-headline'>Users</h1>
       <div className='relative overflow-x-auto shadow-md sm:rounded-lg'>
-        <div className='sticky flex flex-col-reverse justify-between flex-grow gap-4 p-4 lg:flex-row bg-primary'>
+        <div className='flex flex-col-reverse justify-between gap-4 p-4 lg:flex-row bg-primary'>
           <div>
             <label htmlFor='table-search' className='sr-only'>
               Search
