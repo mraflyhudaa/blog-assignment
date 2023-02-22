@@ -40,7 +40,8 @@ This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-opti
 - View post detail page
 - Users page with Create, Read, Update, Delete and Search users
 - CSS is styled using Tailwind CSS
-- The app is deployed on Vercel(soon)
+- API by GoREST API
+- The app is deployed on Vercel
 
 ## Technologies Used
 
@@ -50,3 +51,4 @@ This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-opti
 - [Axios](https://axios-http.com/docs/intro)
 - [React Query](https://tanstack.com/query/latest/docs/react/overview)
 - [ESLint](https://eslint.org/docs/latest/use/getting-started)
+- [GoREST API](https://gorest.co.in/)
