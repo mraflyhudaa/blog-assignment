@@ -1,17 +1,15 @@
 import instance from '../axiosConfig';
 
-export const getAllUsers = (page, name) => {
-  return instance
-    .get(`/users?page=${page}&per_page=10&name=${name}`)
-    .then((res) => res)
-    .catch((error) => error);
+export const getAllUsers = async (page, name) => {
+  const res = await instance.get(
+    `/users?page=${page}&per_page=10&name=${name}`
+  );
+  return res.data;
 };
 
-export const getDetailUser = (id) => {
-  return instance
-    .get(`/users/${id}`)
-    .then((res) => res.data)
-    .catch((error) => error);
+export const getDetailUser = async (id) => {
+  const res = await instance.get(`/users/${id}`);
+  return res.data;
 };
 
 export const createUser = (data) => {
