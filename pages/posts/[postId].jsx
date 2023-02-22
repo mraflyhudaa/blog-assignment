@@ -3,7 +3,6 @@ import { getDetailUser } from '@/api/users';
 import Spinner from '@/components/Spinner';
 import { useQuery } from '@tanstack/react-query';
 import { useRouter } from 'next/router';
-import { useState } from 'react';
 
 export default function Post() {
   const router = useRouter();
@@ -24,7 +23,6 @@ export default function Post() {
   const {
     isLoading,
     isError,
-    error,
     isFetching,
     data: user,
   } = useQuery({
@@ -55,6 +53,7 @@ export default function Post() {
           <div className='mt-4'>
             <h4 className='mb-6 text-lg font-semibold'>Comments</h4>
             <div className='flex flex-col gap-4'>
+              {comments.length == 0 ? <span>No comments</span> : null}
               {comments?.map((comment) => (
                 <ul
                   key={comment.id}
