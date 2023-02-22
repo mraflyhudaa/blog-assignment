@@ -1,36 +1,18 @@
-import { getDetailPost, getPostComments } from '@/api/posts';
-import { getDetailUser } from '@/api/users';
 import Spinner from '@/components/Spinner';
-import { useQuery } from '@tanstack/react-query';
+import { useDetailPost, usePostComments, useViewUser } from '@/hooks';
 import { useRouter } from 'next/router';
 
 export default function Post() {
   const router = useRouter();
   const postId = router.query.postId;
 
-  const { data: post } = useQuery({
-    queryKey: ['post', postId],
-    queryFn: () => getDetailPost(postId),
-  });
+  const { data: post } = useDetailPost(postId);
 
-  const { data: comments, isSuccess } = useQuery({
-    queryKey: ['comments', postId],
-    queryFn: () => getPostComments(postId),
-  });
+  const { data: comments, isSuccess } = usePostComments(postId);
 
   const userId = post?.user_id;
 
-  const {
-    isLoading,
-    isError,
-    isFetching,
-    data: user,
-  } = useQuery({
-    queryKey: ['user', userId],
-    queryFn: () => getDetailUser(userId),
-    enabled: !!userId,
-    retry: false,
-  });
+  const { isLoading, isError, isFetching, data: user } = useViewUser(userId);
 
   if (isLoading || isFetching) {
     return (
