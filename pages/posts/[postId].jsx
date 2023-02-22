@@ -46,7 +46,9 @@ export default function Post() {
           <div>
             <h1 className='text-4xl font-semibold'>{post.title}</h1>
             <h3 className='mt-3 text-lg font-medium text-gray-400'>
-              {isError ? 'User not found' : `by ${user?.name} - ${user?.email}`}
+              {!user.length
+                ? 'User not found'
+                : `by ${user?.name} - ${user?.email}`}
             </h3>
           </div>
           <p>{post.body}</p>
