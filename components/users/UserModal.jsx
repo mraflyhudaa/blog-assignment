@@ -1,8 +1,7 @@
 import { useState } from 'react';
 import Input from '../Input';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { createUser } from '@/api/users';
 import Spinner from '../Spinner';
+import { useCreateUser } from '@/hooks';
 
 const INITIAL_VALUE = {
   name: '',
@@ -12,7 +11,6 @@ const INITIAL_VALUE = {
 };
 
 export default function UserModal({ setIsOpen }) {
-  const queryClient = useQueryClient();
   const [formData, setFormData] = useState(INITIAL_VALUE);
   const [errorMessage, setErrorMessage] = useState('');
 
@@ -23,22 +21,18 @@ export default function UserModal({ setIsOpen }) {
     }));
   };
 
-  const addMutation = useMutation({
-    mutationFn: () => createUser(formData),
-    onSuccess: () =>
-      queryClient.invalidateQueries({
-        queryKey: ['users'],
-      }),
-    onError: (error) =>
-      setErrorMessage(
-        `${error.response.data[0].field} ${error.response.data[0].message}`
-      ),
-  });
+  const { mutate, isLoading } = useCreateUser(formData);
 
   const handleSubmit = (e) => {
     e.preventDefault();
     setErrorMessage('');
-    addMutation.mutate(formData, { onSuccess: () => setIsOpen(false) });
+    mutate(formData, {
+      onSuccess: () => setIsOpen(false),
+      onError: (error) =>
+        setErrorMessage(
+          `${error.response.data[0].field} ${error.response.data[0].message}`
+        ),
+    });
   };
 
   return (
@@ -137,7 +131,7 @@ export default function UserModal({ setIsOpen }) {
                 type='submit'
                 className='w-full text-white bg-primary hover:bg-primary-hover focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center flex justify-center'
               >
-                {addMutation.isLoading ? <Spinner /> : 'Create user'}
+                {isLoading ? <Spinner /> : 'Create user'}
               </button>
             </form>
           </div>

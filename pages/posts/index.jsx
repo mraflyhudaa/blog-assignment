@@ -1,7 +1,6 @@
-import { getAllPosts } from '@/api/posts';
 import PostList from '@/components/posts/PostList';
 import Spinner from '@/components/Spinner';
-import { useQuery } from '@tanstack/react-query';
+import { usePosts } from '@/hooks';
 import { useState } from 'react';
 
 export default function Posts() {
@@ -15,11 +14,7 @@ export default function Posts() {
     error,
     isFetching,
     isPreviousData,
-  } = useQuery({
-    queryKey: ['posts', page],
-    queryFn: () => getAllPosts(page),
-    keepPreviousData: true,
-  });
+  } = usePosts(page);
 
   const renderPosts = () => {
     if (isLoading || isFetching) {

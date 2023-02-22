@@ -1,11 +1,9 @@
 import { useState } from 'react';
 import Input from '../Input';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { updateUser } from '@/api/users';
 import Spinner from '../Spinner';
+import { useUpdateUser } from '@/hooks';
 
 export default function EditModal({ setShowEdit, user }) {
-  const queryClient = useQueryClient();
   const [formData, setFormData] = useState({});
   const [errorMessage, setErrorMessage] = useState('');
 
@@ -16,22 +14,18 @@ export default function EditModal({ setShowEdit, user }) {
     }));
   };
 
-  const updateMutation = useMutation({
-    mutationFn: () => updateUser(user.id, formData),
-    onSuccess: () =>
-      queryClient.invalidateQueries({
-        queryKey: ['users'],
-      }),
-    onError: (error) =>
-      setErrorMessage(
-        `${error.response.data[0].field} ${error.response.data[0].message}`
-      ),
-  });
+  const { mutate, isLoading } = useUpdateUser(user.id, formData);
 
   const handleSubmit = (e) => {
     e.preventDefault();
     setErrorMessage('');
-    updateMutation.mutate(formData, { onSuccess: () => setShowEdit(false) });
+    mutate(formData, {
+      onSuccess: () => setShowEdit(false),
+      onError: (error) =>
+        setErrorMessage(
+          `${error.response.data[0].field} ${error.response.data[0].message}`
+        ),
+    });
   };
 
   return (
@@ -51,9 +45,9 @@ export default function EditModal({ setShowEdit, user }) {
               xmlns='http://www.w3.org/2000/svg'
             >
               <path
-                fill-rule='evenodd'
+                fillRule='evenodd'
                 d='M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z'
-                clip-rule='evenodd'
+                clipRule='evenodd'
               ></path>
             </svg>
             <span className='sr-only'>Close modal</span>
@@ -134,15 +128,15 @@ export default function EditModal({ setShowEdit, user }) {
                 <button
                   type='submit'
                   className='flex justify-center text-white bg-primary hover:bg-primary-hover focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center disabled:cursor-not-allowed'
-                  disabled={updateMutation.isLoading ? true : false}
+                  disabled={isLoading ? true : false}
                 >
-                  {updateMutation.isLoading ? <Spinner /> : 'Edit'}
+                  {isLoading ? <Spinner /> : 'Edit'}
                 </button>
                 <button
                   type='button'
                   onClick={() => setShowEdit(false)}
                   className='text-gray-500 bg-gray-50 hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-200 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10'
-                  disabled={updateMutation.isLoading ? true : false}
+                  disabled={isLoading ? true : false}
                 >
                   Cancel
                 </button>

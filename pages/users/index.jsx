@@ -1,9 +1,8 @@
-import { getAllUsers } from '@/api/users';
 import Spinner from '@/components/Spinner';
 import UserList from '@/components/users/UserList';
 import UserModal from '@/components/users/UserModal';
+import { useUsers } from '@/hooks';
 import { useDebounce } from '@/utils/useDebounce';
-import { useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
 
 export default function Users() {
@@ -20,11 +19,7 @@ export default function Users() {
     error,
     isFetching,
     isPreviousData,
-  } = useQuery({
-    queryKey: ['users', page, debouncedSearchValue],
-    queryFn: () => getAllUsers(page, debouncedSearchValue),
-    keepPreviousData: true,
-  });
+  } = useUsers(page, debouncedSearchValue);
 
   const renderResults = () => {
     if (isLoading || isFetching) {

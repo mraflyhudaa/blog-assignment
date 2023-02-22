@@ -2,9 +2,12 @@ import { useState } from 'react';
 import DeleteModal from './DeleteModal';
 import EditModal from './EditModal';
 
-export default function UserList({ data, page, setPage, isPreviousData }) {
-  const { data: users, headers } = data;
-
+export default function UserList({
+  data: users,
+  page,
+  setPage,
+  isPreviousData,
+}) {
   const [showDelete, setShowDelete] = useState(false);
   const [showEdit, setShowEdit] = useState(false);
   const [selectedId, setSelectedId] = useState();

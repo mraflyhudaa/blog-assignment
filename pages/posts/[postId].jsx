@@ -1,35 +1,18 @@
-import { getDetailPost, getPostComments } from '@/api/posts';
-import { getDetailUser } from '@/api/users';
 import Spinner from '@/components/Spinner';
-import { useQuery } from '@tanstack/react-query';
+import { useDetailPost, usePostComments, useViewUser } from '@/hooks';
 import { useRouter } from 'next/router';
 
 export default function Post() {
   const router = useRouter();
   const postId = router.query.postId;
 
-  const { data: post } = useQuery({
-    queryKey: ['post', postId],
-    queryFn: () => getDetailPost(postId),
-  });
+  const { data: post } = useDetailPost(postId);
 
-  const { data: comments, isSuccess } = useQuery({
-    queryKey: ['comments', postId],
-    queryFn: () => getPostComments(postId),
-  });
+  const { data: comments, isSuccess } = usePostComments(postId);
 
   const userId = post?.user_id;
 
-  const {
-    isLoading,
-    isError,
-    isFetching,
-    data: user,
-  } = useQuery({
-    queryKey: ['user', userId],
-    queryFn: () => getDetailUser(userId),
-    enabled: !!userId,
-  });
+  const { isLoading, isError, isFetching, data: user } = useViewUser(userId);
 
   if (isLoading || isFetching) {
     return (
@@ -46,9 +29,7 @@ export default function Post() {
           <div>
             <h1 className='text-4xl font-semibold'>{post.title}</h1>
             <h3 className='mt-3 text-lg font-medium text-gray-400'>
-              {!user.length
-                ? 'User not found'
-                : `by ${user?.name} - ${user?.email}`}
+              {isError ? 'User not found' : `by ${user.name} - ${user.email}`}
             </h3>
           </div>
           <p>{post.body}</p>
