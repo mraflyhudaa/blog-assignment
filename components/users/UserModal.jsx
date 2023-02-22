@@ -2,6 +2,7 @@ import { useState } from 'react';
 import Input from '../Input';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { createUser } from '@/api/users';
+import Spinner from '../Spinner';
 
 const INITIAL_VALUE = {
   name: '',
@@ -10,12 +11,10 @@ const INITIAL_VALUE = {
   status: '',
 };
 
-export default function UserModal(props) {
+export default function UserModal({ setIsOpen }) {
   const queryClient = useQueryClient();
   const [formData, setFormData] = useState(INITIAL_VALUE);
   const [errorMessage, setErrorMessage] = useState('');
-
-  const { setIsOpen, page, debouncedSearchValue } = props;
 
   const handleChange = async (e) => {
     setFormData((prevState) => ({
@@ -28,7 +27,7 @@ export default function UserModal(props) {
     mutationFn: () => createUser(formData),
     onSuccess: () =>
       queryClient.invalidateQueries({
-        queryKey: ['users', page, debouncedSearchValue],
+        queryKey: ['users'],
       }),
     onError: (error) =>
       setErrorMessage(
@@ -44,7 +43,7 @@ export default function UserModal(props) {
 
   return (
     <div className='fixed inset-0 z-50 flex items-center justify-center overflow-x-hidden overflow-y-auto bg-gray-400 outline-none bg-opacity-60 focus:outline-none backdrop-blur-sm'>
-      <div className='relative w-full h-full max-w-md md:h-auto'>
+      <div className='relative w-full max-w-md md:h-auto'>
         <div className='relative bg-white rounded-lg shadow'>
           <button
             type='button'
@@ -106,7 +105,7 @@ export default function UserModal(props) {
                 <select
                   id='gender'
                   name='gender'
-                  className='bg-gray-50 border border-gray-300 text-headline text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5'
+                  className='bg-gray-50 border border-gray-300 text-headline text-sm rounded-lg focus:ring-primary focus:border-primary block w-full p-2.5'
                   onChange={handleChange}
                   required
                 >
@@ -125,7 +124,7 @@ export default function UserModal(props) {
                 <select
                   id='status'
                   name='status'
-                  className='bg-gray-50 border border-gray-300 text-headline text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5'
+                  className='bg-gray-50 border border-gray-300 text-headline text-sm rounded-lg focus:ring-primary focus:border-primary block w-full p-2.5'
                   onChange={handleChange}
                   required
                 >
@@ -136,9 +135,9 @@ export default function UserModal(props) {
               </div>
               <button
                 type='submit'
-                className='w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center'
+                className='w-full text-white bg-primary hover:bg-primary-hover focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center flex justify-center'
               >
-                Create user
+                {addMutation.isLoading ? <Spinner /> : 'Create user'}
               </button>
             </form>
           </div>

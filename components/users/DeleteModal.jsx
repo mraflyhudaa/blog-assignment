@@ -65,14 +65,16 @@ export default function DeleteModal({ id, setShowDelete, setSelectedId }) {
             <button
               type='button'
               onClick={deleteHandler}
-              className='text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300  font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center mr-2'
+              className='text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300  font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center mr-2 disabled:cursor-not-allowed'
+              disabled={deleteUserMutation.isLoading ? true : false}
             >
               Yes, I&apos;m sure
             </button>
             <button
               type='button'
               onClick={() => setShowDelete(false)}
-              className='text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-200 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10'
+              className='text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-200 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10 disabled:cursor-not-allowed'
+              disabled={deleteUserMutation.isLoading ? true : false}
             >
               No, cancel
             </button>
