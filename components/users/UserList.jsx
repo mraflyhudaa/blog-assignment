@@ -1,15 +1,23 @@
 import { useState } from 'react';
 import DeleteModal from './DeleteModal';
+import EditModal from './EditModal';
 
 export default function UserList({ data, page, setPage, isPreviousData }) {
   const { data: users, headers } = data;
 
   const [showDelete, setShowDelete] = useState(false);
+  const [showEdit, setShowEdit] = useState(false);
   const [selectedId, setSelectedId] = useState();
+  const [selectedRow, setSelectedRow] = useState({});
 
   const handleDelete = (id) => {
     setShowDelete(true);
     setSelectedId(id);
+  };
+
+  const handleEdit = (row) => {
+    setShowEdit(true);
+    setSelectedRow(row);
   };
 
   return (
@@ -62,9 +70,15 @@ export default function UserList({ data, page, setPage, isPreviousData }) {
               <td className='px-6 py-4'>{user.email}</td>
               <td className='px-6 py-4'>{user.gender}</td>
               <td className='px-6 py-4'>{user.status}</td>
-              <td className='px-6 py-4'>
+              <td className='flex gap-4 px-6 py-4'>
                 <button
                   className='font-medium text-blue-600 hover:underline'
+                  onClick={() => handleEdit(user)}
+                >
+                  Edit
+                </button>
+                <button
+                  className='font-medium text-red-600 hover:underline'
                   onClick={() => handleDelete(user.id)}
                 >
                   Delete
@@ -110,6 +124,9 @@ export default function UserList({ data, page, setPage, isPreviousData }) {
           setSelectedId={setSelectedId}
           setShowDelete={setShowDelete}
         />
+      ) : null}
+      {showEdit ? (
+        <EditModal setShowEdit={setShowEdit} user={selectedRow} />
       ) : null}
     </>
   );

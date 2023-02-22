@@ -59,9 +59,9 @@ export default function Users() {
 
   return (
     <div className='z-0 flex flex-col justify-center gap-4 mt-14'>
-      <h1 className='text-3xl text-headline'>Users</h1>
+      <h1 className='text-3xl font-semibold text-headline'>Users</h1>
       <div className='relative overflow-x-auto shadow-md sm:rounded-lg'>
-        <div className='flex justify-between w-full p-4 bg-primary'>
+        <div className='sticky flex flex-col-reverse justify-between flex-grow gap-4 p-4 lg:flex-row bg-primary'>
           <div>
             <label htmlFor='table-search' className='sr-only'>
               Search
@@ -93,7 +93,7 @@ export default function Users() {
           </div>
           <button
             type='button'
-            className='px-4 py-2 text-sm leading-tight text-gray-200 transition-all bg-green-600 rounded-lg hover:bg-green-700 hover:text-white disabled:bg-slate-400 disabled:cursor-not-allowed'
+            className='px-4 py-2 text-sm leading-tight text-white transition-all bg-green-600 rounded-lg hover:bg-green-700 disabled:bg-slate-400 disabled:cursor-not-allowed'
             onClick={() => setIsOpen(!isOpen)}
           >
             Create User
