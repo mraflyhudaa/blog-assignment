@@ -20,6 +20,12 @@ yarn
 pnpm install
 ```
 
+### env
+
+1. find `.env_example` file and rename it to `.env.local` or `.env`
+2. edit `.env` file to add your access token for GoREST API
+3. you can find your access token [here](https://gorest.co.in/consumer/login) and then login with your account
+
 Finally, start the development server by running:
 
 ```bash
